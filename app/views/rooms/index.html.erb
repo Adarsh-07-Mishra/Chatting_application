@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatapp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      overflow-x: hidden;
+    }
+    .sidebar {
+      min-height: 100vh;
+      padding: 20px;
+      background-color: #343a40;
+      color: #fff;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .sidebar:hover {
+      background-color: #495057;
+    }
+    .sidebar-header {
+      margin-bottom: 20px;
+    }
+    .sidebar-header h5 {
+      margin-bottom: 10px;
+    }
+    .sidebar-header .btn {
+      transition: background-color 0.3s ease-in-out;
+    }
+    .sidebar-header .btn:hover {
+      background-color: #dc3545;
+    }
+    .sidebar-content h4 {
+      margin-top: 20px;
+    }
+    .sidebar-content div {
+      margin-bottom: 20px;
+    }
+    .chat-box {
+      padding: 20px;
+      background-color: #fff;
+      border-left: 1px solid #dee2e6;
+    }
+    .chat-box h4 {
+      margin-bottom: 20px;
+      color: #343a40;
+    }
+    #messages {
+      max-height: 500px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      transition: max-height 0.3s ease-in-out;
+    }
+    .message {
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: transform 0.2s ease-in-out;
+    }
+    .message.sent {
+      background-color: #007bff;
+      color: #fff;
+      align-self: flex-end;
+    }
+    .message.received {
+      background-color: #e9ecef;
+      color: #343a40;
+      align-self: flex-start;
+    }
+    .message:hover {
+      transform: scale(1.05);
+    }
+    .message-time {
+      font-size: 0.8em;
+      color: #6c757d;
+      text-align: right;
+    }
+    .new-message-form {
+      display: flex;
+      align-items: center;
+    }
+    .new-message-form input {
+      flex: 1;
+      margin-right: 10px;
+      border-radius: 20px;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      transition: border-color 0.3s ease-in-out;
+    }
+    .new-message-form input:focus {
+      border-color: #80bdff;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    .new-message-form button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .new-message-form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 sidebar">
+        <div class="sidebar-header">
+          <h5>Hi <%= @current_user.username %></h5>
+          <%= link_to 'Sign Out', signout_path, method: :delete, class: 'btn btn-danger btn-sm' %>
+        </div>
+        <div class="sidebar-content">
+          <h4>Users</h4>
+          <div>
+            <%= turbo_stream_from "users" %>
+            <div id="users">
+              <%= render @users %>
+            </div>
+          </div>
+          <h4>Rooms</h4>
+          <%= render partial: "layouts/new_room_form" %>
+          <div>
+            <%= turbo_stream_from "rooms" %>
+            <div id="rooms">
+              <%= render @rooms %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 chat-box">
+        <% if @single_room %>
+          <h4 class="text-center"><%= @user&.username || @single_room.name %></h4>
+          <%= turbo_stream_from @single_room %>
+          <div id="messages" class="d-flex flex-column">
+            <%= render @messages %>
+          </div>
+          <%= render partial: 'layouts/new_message_form', locals: { room: @single_room } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

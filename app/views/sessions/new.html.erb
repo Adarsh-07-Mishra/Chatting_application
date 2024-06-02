@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, #d3cce3, #e9e4f0);
+      color: #333;
+    }
+    .form-signin {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-signin .form-control {
+      position: relative;
+      box-sizing: border-box;
+      height: auto;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    .form-signin .form-control:focus {
+      z-index: 2;
+      border-color: #6a11cb;
+      box-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
+    }
+    .form-signin input[type="text"] {
+      margin-bottom: 10px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .form-signin .btn {
+      font-size: 16px;
+      font-weight: 700;
+      background-color: #6a11cb;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .form-signin .btn:hover {
+      background-color: #2575fc;
+    }
+    .form-signin h1 {
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <%= form_for(:session, html: { class: 'form-signin' }) do |f| %>
+    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+    <div class="form-group">
+      <%= f.label :username, 'Enter your username', class: 'form-label' %>
+      <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username' %>
+    </div>
+    <div class="form-group">
+      <%= f.submit 'Sign in', class: 'btn btn-primary btn-block' %>
+    </div>
+  <% end %>
+</body>
+</html>

@@ -1,0 +1,29 @@
+default: &default
+  adapter: postgresql
+  
+ 
+development:
+  <<: *default
+  adapter: postgresql
+  database: chatting_pg
+  username: chatting_pg
+  password: chatting_pg
+  host: localhost
+  port: 5432
+
+test:
+  <<: *default
+  adapter: postgresql
+  database: chatting_pg
+  username: chatting_pg
+  password: chatting_pg
+  host: localhost
+
+production:
+  <<: *default
+  adapter: postgresql
+  database: chatting_pg
+  username: chatting_pg
+  password: chatting_pg
+  host: localhost
+  port: 5432

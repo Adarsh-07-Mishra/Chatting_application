@@ -1,0 +1,75 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ .sidebar {
+    background-color: #343a40;
+    color: #ffffff;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .sidebar-header {
+    padding: 10px;
+  }
+  
+  .sidebar-content {
+    padding: 10px;
+  }
+  
+  .chat-box {
+    background-color: #f8f9fa;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .chat-messages {
+    padding: 20px;
+    /* Add additional styles for chat messages if needed */
+  }
+
+  
+  .msg-form {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+
+  .col-md-10 {
+    height: 100vh;
+    overflow: scroll;
+  }
+
+  .msg-content {
+    width: 80%;
+    margin-right: 5px;
+  }
+
+  .message-box {
+    width: fit-content;
+    max-width: 40%;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #5555557a ;
+    padding: 10px
+  }
+  
+  
