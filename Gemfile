@@ -67,9 +67,8 @@ group :test do
 end
 
 gem 'pg', '~> 1.5'
-
 gem 'sidekiq', '~> 7.2'
 gem 'uri', '0.13.0'
-
-gem 'rubocop', '~> 1.64'
 gem 'acts_as_paranoid'
+gem 'rubocop', '~> 1.64'
+gem 'bcrypt', '~> 3.1'
