@@ -1,19 +1,28 @@
 class SessionsController < ApplicationController
   def create
-    @user = User.find_or_initialize_by(username: params[:session][:username])
-    if @user.persisted?
-      log_in(@user)
-    elsif @user.save
-      log_in(@user)
-      UserNotificationMailer.welcome_email(@user).deliver_now
+    @user = User.find_by(username: params[:session][:username])
+
+    if @user && @user.authenticate(params[:session][:password])
+      log_in(@user)  
+    elsif @user
+      @error_message = 'Incorrect password. Please try again.'
+      render 'new', status: :unprocessable_entity
     else
-      flash.now[:alert] = 'There was an error creating the user. Username must be at least 5 characters long.'
-      render 'new'
+      @user = User.new(username: params[:session][:username], password: params[:session][:password])
+      
+      if @user.save
+        log_in(@user)
+        UserNotificationMailer.welcome_email(@user).deliver_now
+      else
+        @error_message = 'There was an error creating the user. Username must be at least 5 characters long and password must be at least 6 characters long.'
+        render 'new', status: :unprocessable_entity
+      end
     end
   end
 
   def destroy
     log_out if logged_in?
-    redirect_to root_path, notice: 'Logged out successfully.'
-  end
+    @notice_message = 'Logged out successfully.'
+    render 'new'
+  end  
 end

@@ -39,7 +39,7 @@
       border-color: #6a11cb;
       box-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
     }
-    .form-signin input[type="text"] {
+    .form-signin input[type="text"], .form-signin input[type="password"] {
       margin-bottom: 10px;
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
@@ -60,18 +60,42 @@
       font-weight: 700;
       text-align: center;
     }
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+    .notice-message {
+      color: green;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <%= form_for(:session, html: { class: 'form-signin' }) do |f| %>
+  <div class="form-signin">
     <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
-    <div class="form-group">
-      <%= f.label :username, 'Enter your username', class: 'form-label' %>
-      <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username' %>
-    </div>
-    <div class="form-group">
-      <%= f.submit 'Sign in', class: 'btn btn-primary btn-block' %>
-    </div>
-  <% end %>
+    <% if @error_message %>
+      <div class="error-message">
+        <%= @error_message %>
+      </div>
+    <% end %>
+    <% if @notice_message %>
+      <div class="notice-message">
+        <%= @notice_message %>
+      </div>
+    <% end %>
+    <%= form_for(:session, url: login_path, html: { class: 'form-signin' }) do |f| %>
+      <div class="form-group">
+        <%= f.label :username, 'Enter your username', class: 'form-label' %>
+        <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password, 'Enter your password', class: 'form-label' %>
+        <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+      </div>
+      <div class="form-group">
+        <%= f.submit 'Sign in', class: 'btn btn-primary btn-block' %>
+      </div>
+    <% end %>
+  </div>
 </body>
 </html>
