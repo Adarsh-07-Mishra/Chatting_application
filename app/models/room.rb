@@ -18,4 +18,8 @@ class Room < ApplicationRecord
     end
     single_room
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "id_value", "is_private", "name", "updated_at"]
+  end
 end
