@@ -7,6 +7,10 @@ class Message < ApplicationRecord
   before_create :confirm_participant
   after_create :schedule_deletion
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["content", "created_at", "deleted_at", "id", "id_value", "room_id", "updated_at", "user_id"]
+  end
+
   def confirm_participant
     return unless room.is_private
 

@@ -72,3 +72,9 @@ gem 'uri', '0.13.0'
 gem 'acts_as_paranoid'
 gem 'rubocop', '~> 1.64'
 gem 'bcrypt', '~> 3.1'
+
+gem "activeadmin", "~> 3.2"
+
+gem "devise", "~> 4.9"
+
+gem "sassc", "~> 2.4"

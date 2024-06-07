@@ -10,68 +10,97 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <style>
     body {
-      background-color: #f8f9fa;
+      background-color: #F8F9FA;
       overflow-x: hidden;
+      font-family: 'Arial', sans-serif;
     }
     .sidebar {
       min-height: 100vh;
       padding: 20px;
-      background-color: #343a40;
+      background-color: #1E2A38;
       color: #fff;
       transition: background-color 0.3s ease-in-out;
     }
-    .sidebar:hover {
-      background-color: #495057;
-    }
     .sidebar-header {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      text-align: center;
     }
     .sidebar-header h5 {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-weight: bold;
     }
     .sidebar-header .btn {
+      width: 100%;
       transition: background-color 0.3s ease-in-out;
     }
     .sidebar-header .btn:hover {
-      background-color: #dc3545;
+      background-color: #DC3545;
+    }
+    .sidebar-content {
+      margin-top: 30px;
     }
     .sidebar-content h4 {
       margin-top: 20px;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 10px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: #fff;
+      text-align: center;
     }
-    .sidebar-content div {
-      margin-bottom: 20px;
+    .user-list, .room-list {
+      padding: 10px;
+      background-color: #273444;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .user-list a, .room-list a {
+      color: #00c6ff;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .user-list a:hover, .room-list a:hover {
+      background-color: #00c6ff;
+      color: #fff;
     }
     .chat-box {
-      height: 100vh; 
+      height: 100vh;
       padding: 20px;
       background-color: #fff;
-      border-left: 1px solid #dee2e6;
+      border-left: 1px solid #DEE2E6;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    
     .chat-box h4 {
       margin-bottom: 20px;
-      color: #343a40;
+      color: #343A40;
+      text-align: center;
+      font-weight: bold;
     }
     #messages {
-      max-height: 500px;
-      overflow-y: auto;
-      margin-bottom: 20px;
-      transition: max-height 0.3s ease-in-out;
+      flex-grow: 1;
+      # overflow-y: auto;
+      max-height: calc(100vh - 200px);
     }
     .message {
       padding: 10px;
       border-radius: 10px;
       margin-bottom: 10px;
       transition: transform 0.2s ease-in-out;
+      max-width: 70%;
     }
     .message.sent {
-      background-color: #007bff;
+      background-color: #007BFF;
       color: #fff;
       align-self: flex-end;
     }
     .message.received {
-      background-color: #e9ecef;
-      color: #343a40;
+      background-color: #E9ECEF;
+      color: #343A40;
       align-self: flex-start;
     }
     .message:hover {
@@ -79,36 +108,39 @@
     }
     .message-time {
       font-size: 0.8em;
-      color: #6c757d;
+      color: #6C757D;
       text-align: right;
     }
     .new-message-form {
       display: flex;
       align-items: center;
+      padding: 10px;
+      border-top: 1px solid #DEE2E6;
+      background-color: #F8F9FA;
     }
     .new-message-form input {
       flex: 1;
       margin-right: 10px;
       border-radius: 20px;
       padding: 10px;
-      border: 1px solid #ced4da;
+      border: 1px solid #CED4DA;
       transition: border-color 0.3s ease-in-out;
     }
     .new-message-form input:focus {
-      border-color: #80bdff;
+      border-color: #80BDFF;
       outline: 0;
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
     .new-message-form button {
       padding: 10px 20px;
       border-radius: 20px;
-      background-color: #007bff;
+      background-color: #007BFF;
       color: #fff;
       border: none;
       transition: background-color 0.3s ease-in-out;
     }
     .new-message-form button:hover {
-      background-color: #0056b3;
+      background-color: #0056B3;
     }
   </style>
 </head>
@@ -122,7 +154,7 @@
         </div>
         <div class="sidebar-content">
           <h4>Users</h4>
-          <div>
+          <div class="user-list">
             <%= turbo_stream_from "users" %>
             <div id="users">
               <%= render @users %>
@@ -130,7 +162,7 @@
           </div>
           <h4>Rooms</h4>
           <%= render partial: "layouts/new_room_form" %>
-          <div>
+          <div class="room-list">
             <%= turbo_stream_from "rooms" %>
             <div id="rooms">
               <%= render @rooms %>
@@ -138,7 +170,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-10 chat-box">
+      <div class="col-md-10 chat-box" id="test">
         <% if @single_room %>
           <h4 class="text-center"><%= @user&.username || @single_room.name %></h4>
           <%= turbo_stream_from @single_room %>
@@ -149,6 +181,10 @@
         <% end %>
       </div>
     </div>
+    <script>
+      var chatHistory = document.getElementById("test");
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    </script>
   </div>
 </body>
 </html>
