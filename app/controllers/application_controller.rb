@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   def log_in(user)
     session[:user_id] = user.id
     @current_user = user
+    user.update(last_sign_in_at: Time.current)
     redirect_to root_path
   end
 

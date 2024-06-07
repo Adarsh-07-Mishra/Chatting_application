@@ -1,0 +1,4 @@
+delete_inactive_users:
+  cron: "0 1 * * *" 
+  class: "DeleteInactiveUsersJob"
+  queue: default
