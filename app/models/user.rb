@@ -2,6 +2,7 @@ class User < ApplicationRecord
 
   has_secure_password
   has_many :messages, dependent: :destroy
+  has_many :room_creation_requests, dependent: :destroy
 
   validates_uniqueness_of :username
    validates :username, presence: true, length: { minimum: 1 }
