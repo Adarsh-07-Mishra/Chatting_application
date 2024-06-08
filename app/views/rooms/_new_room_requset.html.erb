@@ -1,0 +1,7 @@
+<%= form_with(model: current_user.room_creation_requests.build, url: room_creation_requests_path, method: :post) do |form| %>
+  <div class="form-group">
+    <%= form.label :name, "Room Name", class: "font-weight-bold" %>
+    <%= form.text_field :name, id: "room_name", class: "form-control", placeholder: "Enter room name" %>
+  </div>
+  <%= form.submit 'Send Request', class: 'btn btn-primary btn-block mt-3' %>
+<% end %>
