@@ -8,65 +8,81 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     body {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: linear-gradient(to right, #D3CCE3, #E9E4F0);
-      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Poppins', sans-serif;
       margin: 0;
     }
     .form-signin {
       width: 100%;
-      max-width: 360px;
-      padding: 20px 30px;
+      max-width: 400px;
+      padding: 30px;
       background-color: #fff;
       border-radius: 15px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
     .form-signin h1 {
       margin-bottom: 20px;
-      font-weight: 700;
-      color: #6A11CB;
-      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      font-size: 28px;
     }
-    .form-signin .form-control {
-      height: auto;
-      padding: 10px;
+    .form-signin .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .form-signin .input-group .form-control {
+      height: 45px;
+      padding-left: 40px;
       font-size: 16px;
       border-radius: 5px;
-      margin-bottom: 15px;
+      border: 1px solid #ced4da;
       transition: border-color 0.3s, box-shadow 0.3s;
     }
-    .form-signin .form-control:focus {
-      border-color: #6A11CB;
-      box-shadow: 0 0 10px rgba(106, 17, 203, 0.4);
+    .form-signin .input-group .form-control:focus {
+      border-color: #764ba2;
+      box-shadow: 0 0 8px rgba(118, 75, 162, 0.4);
+    }
+    .form-signin .input-group .input-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #ced4da;
     }
     .form-signin .btn {
+      width: 100%;
       font-size: 16px;
       font-weight: 700;
-      background-color: #6A11CB;
+      background-color: #667eea;
       border: none;
       border-radius: 5px;
-      padding: 10px;
+      padding: 12px;
       transition: background-color 0.3s, transform 0.3s;
-      margin-top: 10px;
     }
     .form-signin .btn:hover {
-      background-color: #2575FC;
+      background-color: #5644c3;
       transform: translateY(-2px);
     }
     .error-message, .notice-message {
       margin-top: 10px;
+      font-size: 14px;
+      text-align: left;
     }
     .error-message {
-      color: red;
+      color: #e74c3c;
     }
     .notice-message {
-      color: green;
+      color: #27ae60;
     }
   </style>
 </head>
@@ -83,9 +99,15 @@
         <%= @notice_message %>
       </div>
     <% end %>
-    <%= form_for(:session, url: login_path, html: { class: 'form-signin' }) do |f| %>
-      <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username' %>
-      <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+    <%= form_for(:session, url: login_path) do |f| %>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user"></i></span>
+        <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username' %>
+      </div>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-lock"></i></span>
+        <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+      </div>
       <%= f.submit 'Sign in', class: 'btn btn-primary btn-block' %>
     <% end %>
   </div>

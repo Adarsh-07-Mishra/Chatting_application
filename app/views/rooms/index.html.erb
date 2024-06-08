@@ -11,13 +11,13 @@
   <style>
     body {
       background-color: #F8F9FA;
-      overflow-x: hidden;
       font-family: 'Arial', sans-serif;
+      color: #343A40;
     }
     .sidebar {
       min-height: 100vh;
       padding: 20px;
-      background-color: #1E2A38;
+      background-color: #343A40;
       color: #fff;
       transition: background-color 0.3s ease-in-out;
     }
@@ -50,7 +50,7 @@
     }
     .user-list, .room-list {
       padding: 10px;
-      background-color: #273444;
+      background-color: #2C3E50;
       border-radius: 10px;
       margin-top: 20px;
     }
@@ -83,8 +83,12 @@
     }
     #messages {
       flex-grow: 1;
-      # overflow-y: auto;
+      overflow-y: auto;
       max-height: calc(100vh - 200px);
+      padding: 20px;
+      background-color: #F8F9FA;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     .message {
       padding: 10px;
@@ -182,8 +186,27 @@
       </div>
     </div>
     <script>
-      var chatHistory = document.getElementById("test");
-      chatHistory.scrollTop = chatHistory.scrollHeight;
+      document.addEventListener('turbo:load', function() {
+        var messagesContainer = document.getElementById('messages');
+        if (messagesContainer) {
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+      });
+
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          var messagesContainer = document.getElementById('messages');
+          if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          }
+        });
+      });
+
+      var config = { childList: true };
+      var targetNode = document.getElementById('messages');
+      if (targetNode) {
+        observer.observe(targetNode, config);
+      }
     </script>
   </div>
 </body>
