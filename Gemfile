@@ -78,9 +78,3 @@ gem "activeadmin", "~> 3.2"
 gem "devise", "~> 4.9"
 
 gem "sassc", "~> 2.4"
-
-
-gem 'arctic_admin'
-gem 'activeadmin_addons'
-gem 'activeadmin_quill_editor', '~> 0.2.0'
-gem 'active_skin'
