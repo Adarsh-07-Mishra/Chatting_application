@@ -1,11 +1,12 @@
 class Room < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
-  after_create_commit { broadcast_if_public }
 
-  validates_uniqueness_of :name
+  validates :name, uniqueness: true
+
   scope :public_rooms, -> { where(is_private: false) }
-  after_create_commit { broadcast_append_to 'rooms' }
+
+  after_create_commit :broadcast_if_public
 
   def broadcast_if_public
     broadcast_append_to 'rooms' unless is_private
@@ -20,6 +21,6 @@ class Room < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "id", "id_value", "is_private", "name", "updated_at"]
+    ["created_at", "id", "is_private", "name", "updated_at"]
   end
 end

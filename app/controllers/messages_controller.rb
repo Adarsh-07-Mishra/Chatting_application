@@ -5,6 +5,8 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.persisted?
+        format.turbo_stream
+        format.html { redirect_to room_path(@message.room) }
         format.json { render json: @message.as_json(include: :created_at), status: :created, location: @message }
       else
         format.html { render :new, status: :unprocessable_entity }
