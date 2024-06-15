@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :rooms, through: :participants
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 1 }
+  validates :gender, presence: true, inclusion: { in: %w(male female), message: "%{value} is not a valid gender" }
 
   scope :all_except, ->(user) { where.not(id: user&.id) }
 

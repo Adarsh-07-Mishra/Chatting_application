@@ -5,6 +5,7 @@ ActiveAdmin.register User do
     selectable_column
     id_column
     column :username
+    column :gender
     column :last_sign_in_at
     column :created_at
     actions
