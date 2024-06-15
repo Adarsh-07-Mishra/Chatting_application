@@ -1,93 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Sign Up</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shuffle Bootstrap Template - Login</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- Custom Styles -->
   <style>
     body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       background: linear-gradient(135deg, #667eea, #764ba2);
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
     }
+    
+    .image-section {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(70%);
+    }
+    
+    .login-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
     .form-signup {
       width: 100%;
       max-width: 400px;
       padding: 30px;
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.9);
       border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       text-align: center;
     }
+    
     .form-signup h1 {
       margin-bottom: 20px;
       font-weight: 600;
       color: #333;
       font-size: 28px;
     }
+    
     .form-signup .input-group {
-      position: relative;
       margin-bottom: 20px;
+      position: relative;
     }
+    
     .form-signup .input-group .form-control {
       height: 45px;
       padding-left: 40px;
       font-size: 16px;
-      border-radius: 5px;
+      border-radius: 25px;
       border: 1px solid #ced4da;
       transition: border-color 0.3s, box-shadow 0.3s;
     }
+    
     .form-signup .input-group .form-control:focus {
       border-color: #764ba2;
       box-shadow: 0 0 8px rgba(118, 75, 162, 0.4);
     }
+    
     .form-signup .input-group .input-icon {
       position: absolute;
-      left: 10px;
+      left: 15px;
       top: 50%;
       transform: translateY(-50%);
       font-size: 18px;
       color: #ced4da;
     }
+    
     .form-signup .btn {
       width: 100%;
       font-size: 16px;
       font-weight: 700;
       background-color: #667eea;
       border: none;
-      border-radius: 5px;
+      border-radius: 25px;
       padding: 12px;
       transition: background-color 0.3s, transform 0.3s;
     }
+    
     .form-signup .btn:hover {
       background-color: #5644c3;
       transform: translateY(-2px);
     }
-    .error-message, .notice-message {
+    
+    .error-message,
+    .notice-message {
       margin-top: 10px;
       font-size: 14px;
       text-align: left;
     }
+    
     .error-message {
       color: #e74c3c;
     }
+    
     .notice-message {
       color: #27ae60;
     }
+    
     .form-signup .gender-group {
       margin-bottom: 20px;
       text-align: left;
     }
+    
     .form-signup .gender-group label {
       margin-right: 20px;
       font-size: 16px;
@@ -95,38 +131,74 @@
     }
   </style>
 </head>
+
 <body>
-  <div class="form-signup">
-    <h1>Login / Sign Up</h1>
-    <% if @error_message %>
-      <div class="error-message">
-        <%= @error_message %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Image Section -->
+      <div class="col-md-6 p-0 image-section">
+        <img src="assets/slide/slide-1.jpg" alt="Background Image">
       </div>
-    <% end %>
-    <% if @notice_message %>
-      <div class="notice-message">
-        <%= @notice_message %>
+
+      <!-- Login Form Section -->
+      <div class="col-md-6 p-0 login-section">
+        <div class="form-signup">
+          <h1>Welcome Back!</h1>
+
+          <!-- Placeholder for error messages -->
+          <% if @error_message %>
+            <div class="alert alert-danger" role="alert">
+              <%= @error_message %>
+            </div>
+          <% end %>
+
+          <!-- Placeholder for notice messages -->
+          <% if @notice_message %>
+            <div class="alert alert-success" role="alert">
+              <%= @notice_message %>
+            </div>
+          <% end %>
+
+          <!-- Form for login -->
+          <%= form_for(:session, url: login_path) do |f| %>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username' %>
+            </div>
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              </div>
+              <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+            </div>
+
+            <!-- Radio buttons for gender -->
+            <div class="gender-group mt-3">
+              <label class="mr-3">
+                <%= f.radio_button :gender, 'male' %> Male
+              </label>
+              <label>
+                <%= f.radio_button :gender, 'female' %> Female
+              </label>
+            </div>
+
+            <!-- Submit button -->
+            <%= f.submit 'Sign In', class: 'btn btn-primary btn-block mt-4' %>
+          <% end %>
+        </div>
       </div>
-    <% end %>
-    <%= form_for(:session, url: login_path) do |f| %>
-      <div class="input-group">
-        <span class="input-icon"><i class="fas fa-user"></i></span>
-        <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username' %>
-      </div>
-      <div class="input-group">
-        <span class="input-icon"><i class="fas fa-lock"></i></span>
-        <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
-      </div>
-      <div class="gender-group">
-        <label>
-          <%= f.radio_button :gender, 'male' %> Male
-        </label>
-        <label>
-          <%= f.radio_button :gender, 'female' %> Female
-        </label>
-      </div>
-      <%= f.submit 'Sign In', class: 'btn btn-primary btn-block' %>
-    <% end %>
+    </div>
   </div>
+
+  <!-- Bootstrap and Custom JS Files -->
+  <!-- Bootstrap JS, Popper.js, and jQuery (if needed) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
+
 </html>
