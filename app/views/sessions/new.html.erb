@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sign In</title>
+  <title>Sign Up</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -20,7 +20,7 @@
       font-family: 'Poppins', sans-serif;
       margin: 0;
     }
-    .form-signin {
+    .form-signup {
       width: 100%;
       max-width: 400px;
       padding: 30px;
@@ -29,17 +29,17 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
-    .form-signin h1 {
+    .form-signup h1 {
       margin-bottom: 20px;
       font-weight: 600;
       color: #333;
       font-size: 28px;
     }
-    .form-signin .input-group {
+    .form-signup .input-group {
       position: relative;
       margin-bottom: 20px;
     }
-    .form-signin .input-group .form-control {
+    .form-signup .input-group .form-control {
       height: 45px;
       padding-left: 40px;
       font-size: 16px;
@@ -47,11 +47,11 @@
       border: 1px solid #ced4da;
       transition: border-color 0.3s, box-shadow 0.3s;
     }
-    .form-signin .input-group .form-control:focus {
+    .form-signup .input-group .form-control:focus {
       border-color: #764ba2;
       box-shadow: 0 0 8px rgba(118, 75, 162, 0.4);
     }
-    .form-signin .input-group .input-icon {
+    .form-signup .input-group .input-icon {
       position: absolute;
       left: 10px;
       top: 50%;
@@ -59,7 +59,7 @@
       font-size: 18px;
       color: #ced4da;
     }
-    .form-signin .btn {
+    .form-signup .btn {
       width: 100%;
       font-size: 16px;
       font-weight: 700;
@@ -69,7 +69,7 @@
       padding: 12px;
       transition: background-color 0.3s, transform 0.3s;
     }
-    .form-signin .btn:hover {
+    .form-signup .btn:hover {
       background-color: #5644c3;
       transform: translateY(-2px);
     }
@@ -84,11 +84,20 @@
     .notice-message {
       color: #27ae60;
     }
+    .form-signup .gender-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .form-signup .gender-group label {
+      margin-right: 20px;
+      font-size: 16px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
-  <div class="form-signin">
-    <h1>Sign In / Register</h1>
+  <div class="form-signup">
+    <h1>Login / Sign Up</h1>
     <% if @error_message %>
       <div class="error-message">
         <%= @error_message %>
@@ -108,7 +117,15 @@
         <span class="input-icon"><i class="fas fa-lock"></i></span>
         <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
       </div>
-      <%= f.submit 'Sign in', class: 'btn btn-primary btn-block' %>
+      <div class="gender-group">
+        <label>
+          <%= f.radio_button :gender, 'male' %> Male
+        </label>
+        <label>
+          <%= f.radio_button :gender, 'female' %> Female
+        </label>
+      </div>
+      <%= f.submit 'Sign In', class: 'btn btn-primary btn-block' %>
     <% end %>
   </div>
 </body>
