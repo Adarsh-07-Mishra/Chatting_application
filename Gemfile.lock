@@ -50,6 +50,7 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_admin_theme (1.1.4)
     activeadmin (3.2.2)
       arbre (~> 1.2, >= 1.2.1)
       csv
@@ -336,6 +337,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_admin_theme
   activeadmin (~> 3.2)
   acts_as_paranoid
   bcrypt (~> 3.1)
