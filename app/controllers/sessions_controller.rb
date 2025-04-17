@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:omniauth]
+
   def create
     @user = User.find_by(username: params[:session][:username])
 
@@ -16,6 +18,18 @@ class SessionsController < ApplicationController
         @error_message = 'There was an error creating the user. Username must be at least 5 characters long and password must be at least 4 characters long and selection of gender must be included.'
         render 'new', status: :unprocessable_entity
       end
+    end
+  end
+
+  def omniauth
+    user = User.from_omniauth(request.env['omniauth.auth'])
+    if user.persisted?
+      user.username = user.email.split('@').first
+      user.save
+      session[:user_id] = user.id
+      redirect_to root_path, notice: "Signed in as #{user.name}"
+    else
+      redirect_to root_path, alert: "Failed to sign in"
     end
   end
 
