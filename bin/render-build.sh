@@ -2,8 +2,8 @@
 # exit on error
 set -o errexit
 
-# Force Ruby platform for Nokogiri
-bundle config set force_ruby_platform true
+# Force Ruby platform for Nokogiri and other gems
+bundle config set --local force_ruby_platform true
 
 # Install dependencies
 bundle install
