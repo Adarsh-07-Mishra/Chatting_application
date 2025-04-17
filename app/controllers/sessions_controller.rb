@@ -19,6 +19,18 @@ class SessionsController < ApplicationController
     end
   end
 
+  def omniauth
+    user = User.from_omniauth(request.env['omniauth.auth'])
+    if user.persisted?
+      user.username = user.email.split('@').first
+      user.save
+      session[:user_id] = user.id
+      redirect_to root_path, notice: "Signed in as #{user.name}"
+    else
+      redirect_to root_path, alert: "Failed to sign in"
+    end
+  end
+
   def destroy
     log_out if logged_in?
     @notice_message = 'Logged out successfully.'

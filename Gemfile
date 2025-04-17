@@ -79,3 +79,7 @@ gem "devise", "~> 4.9"
 
 gem "sassc", "~> 2.4"
 gem 'active_admin_theme'
+
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'dotenv-rails'

@@ -188,6 +188,9 @@
             <!-- Submit button -->
             <%= f.submit 'Sign In', class: 'btn btn-primary btn-block mt-4' %>
           <% end %>
+
+          <!-- Google Sign-in Link -->
+          <%= link_to "Sign in with Google", "/auth/google_oauth2", data: { turbo: false }, class: "btn btn-danger btn-block mt-3" %>
         </div>
       </div>
     </div>

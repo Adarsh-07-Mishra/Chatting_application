@@ -15,4 +15,9 @@ Rails.application.routes.draw do
     resources :messages
   end
   resources :room_creation_requests, only: [:create]
+
+  get '/auth/:provider/callback', to: 'sessions#omniauth'
+  post '/auth/:provider/callback', to: 'sessions#omniauth' # Optional: for button_to with method: :post
+  get '/auth/failure', to: redirect('/login')
+
 end
