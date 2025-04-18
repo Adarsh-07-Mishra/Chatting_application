@@ -26,6 +26,7 @@ class SessionsController < ApplicationController
       user.save
       session[:user_id] = user.id
       redirect_to root_path, notice: "Signed in as #{user.name}"
+      UserNotificationMailer.welcome_email(user).deliver_now
     else
       redirect_to root_path, alert: "Failed to sign in"
     end
