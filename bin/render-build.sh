@@ -3,7 +3,7 @@
 set -o errexit
 
 # Force Ruby platform for Nokogiri and other gems
-bundle config set --local force_ruby_platform true
+bundle config set build.nokogiri --use-system-libraries=false
 
 # Install dependencies
 bundle install
