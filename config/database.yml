@@ -21,9 +21,5 @@ test:
 
 production:
   <<: *default
-  adapter: postgresql
-  database: prod_chatting_pg
-  username: chatting_pg
-  password: chatting_pg
-  host: localhost
-  port: 5432
+  url: <%= ENV['DATABASE_URL'] %>
+
