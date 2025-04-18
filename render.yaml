@@ -18,6 +18,8 @@ services:
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
+      - key: NOKOGIRI_USE_SYSTEM_LIBRARIES
+        value: "false"
 
   - name: sidekiq
     env: ruby
