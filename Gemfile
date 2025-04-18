@@ -84,4 +84,5 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'dotenv-rails'
 
-gem 'nokogiri', '~> 1.18', platforms: :ruby, require: false
+gem 'nokogiri', '1.18.7', platforms: :ruby, require: false
+
