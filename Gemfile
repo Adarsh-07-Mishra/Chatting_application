@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby '3.1.4'
@@ -47,6 +49,8 @@ gem 'bootsnap', require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mswin mswin64 mingw x64_mingw]
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false # Optional: adds Rails-specific cops
 end
 
 group :development do
@@ -66,22 +70,22 @@ group :test do
   gem 'selenium-webdriver'
 end
 
+gem 'acts_as_paranoid'
+gem 'bcrypt', '~> 3.1'
 gem 'pg', '~> 1.5'
 gem 'sidekiq', '~> 7.2'
 gem 'uri', '0.13.0'
-gem 'acts_as_paranoid'
-gem 'rubocop', '~> 1.64'
-gem 'bcrypt', '~> 3.1'
 
-gem "activeadmin", "~> 3.2"
+gem 'activeadmin', '~> 3.2'
 
-gem "devise", "~> 4.9"
+gem 'devise', '~> 4.9'
 
-gem "sassc", "~> 2.4"
 gem 'active_admin_theme'
+gem 'sassc', '~> 2.4'
 
+gem 'dotenv-rails'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'dotenv-rails'
 
+gem 'byebug'
 gem 'nokogiri', '1.18.7', platforms: [:ruby], require: false

@@ -1,14 +1,17 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
   def create
     @user = User.find_by(username: params[:session][:username])
 
-    if @user && @user.authenticate(params[:session][:password])
-      log_in(@user)  
+    if @user&.authenticate(params[:session][:password])
+      log_in(@user)
     elsif @user
       @error_message = 'Incorrect password. Please try again.'
       render 'new', status: :unprocessable_entity
     else
-      @user = User.new(username: params[:session][:username], password: params[:session][:password], gender: params[:session][:gender])
+      @user = User.new(username: params[:session][:username], password: params[:session][:password],
+                       gender: params[:session][:gender])
       if @user.save
         log_in(@user)
         UserNotificationMailer.welcome_email(@user).deliver_now
@@ -22,13 +25,15 @@ class SessionsController < ApplicationController
   def omniauth
     user = User.from_omniauth(request.env['omniauth.auth'])
     if user.persisted?
+      is_new_user = user.created_at == user.updated_at
       user.username = user.email.split('@').first
       user.save
       session[:user_id] = user.id
+      UserNotificationMailer.welcome_email(user).deliver_now if is_new_user
+
       redirect_to root_path, notice: "Signed in as #{user.name}"
-      UserNotificationMailer.welcome_email(user).deliver_now
     else
-      redirect_to root_path, alert: "Failed to sign in"
+      redirect_to root_path, alert: 'Failed to sign in'
     end
   end
 
@@ -36,5 +41,5 @@ class SessionsController < ApplicationController
     log_out if logged_in?
     @notice_message = 'Logged out successfully.'
     render 'new'
-  end  
+  end
 end

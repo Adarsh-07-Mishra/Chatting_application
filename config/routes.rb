@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -19,5 +21,4 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#omniauth'
   post '/auth/:provider/callback', to: 'sessions#omniauth' # Optional: for button_to with method: :post
   get '/auth/failure', to: redirect('/login')
-
 end

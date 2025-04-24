@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Message < ApplicationRecord
   acts_as_paranoid
 
@@ -9,8 +11,8 @@ class Message < ApplicationRecord
   before_create :confirm_participant
   after_create :schedule_deletion
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["content", "created_at", "deleted_at", "id", "room_id", "updated_at", "user_id"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[content created_at deleted_at id room_id updated_at user_id]
   end
 
   def confirm_participant
