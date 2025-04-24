@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register User do
   permit_params :username, :password, :password_confirmation
 
@@ -19,7 +21,7 @@ ActiveAdmin.register User do
       row :updated_at
     end
 
-    panel "Messages" do
+    panel 'Messages' do
       table_for user.messages do
         column :content
         column :created_at
@@ -30,8 +32,6 @@ ActiveAdmin.register User do
 
   filter :username
   filter :created_at
-
-  
 
   form do |f|
     f.inputs do

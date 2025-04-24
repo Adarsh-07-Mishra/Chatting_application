@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Room < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
@@ -20,7 +22,7 @@ class Room < ApplicationRecord
     single_room
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "id", "is_private", "name", "updated_at"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at id is_private name updated_at]
   end
 end

@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class MessagesController < ApplicationController
   def create
     @current_user = current_user
-    @message = @current_user.messages.create(content: format_message_content(msg_params[:content]), room_id: params[:room_id])
+    @message = @current_user.messages.create(content: format_message_content(msg_params[:content]),
+                                             room_id: params[:room_id])
 
     respond_to do |format|
       if @message.persisted?
