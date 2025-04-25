@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chatapp</title>
+  <title>ConvoSpace</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -51,7 +51,7 @@
       display: flex;
       flex-direction: column;
     }
-      
+
     .sidebar-content h4 {
       font-weight: bold;
       padding: 10px;
@@ -68,7 +68,7 @@
       border-radius: 10px;
       margin-top: 20px;
       overflow-y: auto;
-      height: 200px;
+      height: 250px;
       scrollbar-width: thin;
       scrollbar-color: #1abc9c transparent;
     }
@@ -226,7 +226,7 @@
   <!-- Top Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
     <div class="container-fluid">
-      <a class="navbar-brand font-weight-bold" href="#">ChatApp</a>
+      <a class="navbar-brand font-weight-bold" href="#">ConvoSpace</a>
       <div class="ml-auto d-flex align-items-center">
         <span class="navbar-text text-white mr-3">
           Hi <%= @current_user.username %>
