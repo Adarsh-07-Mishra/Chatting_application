@@ -2,58 +2,88 @@
 <html>
 <head>
   <title>Chatapp</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+
   <style>
     body {
       background-color: #F8F9FA;
       font-family: 'Arial', sans-serif;
       color: #343A40;
+      margin: 0;
+      padding-top: 70px; /* offset for fixed navbar */
+      overflow: hidden;
     }
+
+    .navbar {
+      z-index: 1050;
+    }
+
+    .main-container {
+      display: flex;
+      height: calc(100vh - 70px);
+      overflow: hidden;
+    }
+
     .sidebar {
-      min-height: 100vh;
-      padding: 20px;
+      width: 350px; /* increased from 250px */
       background-color: #343A40;
       color: #fff;
-      transition: background-color 0.3s ease-in-out;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
     }
-    .sidebar-header {
-      margin-bottom: 30px;
-      text-align: center;
+
+    .content {
+      margin-left: 350px; /* match the new sidebar width */
+      width: calc(100% - 350px);
+      display: flex;
+      flex-direction: column;
     }
-    .sidebar-header h5 {
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-    .sidebar-header .btn {
-      width: 100%;
-      transition: background-color 0.3s ease-in-out;
-    }
-    .sidebar-header .btn:hover {
-      background-color: #DC3545;
-    }
-    .sidebar-content {
-      margin-top: 30px;
-    }
+      
     .sidebar-content h4 {
-      margin-top: 20px;
       font-weight: bold;
       padding: 10px;
+      margin-top: 10px;
       border-radius: 10px;
       background: linear-gradient(to right, #00c6ff, #0072ff);
       color: #fff;
       text-align: center;
     }
+
     .user-list, .room-list {
       padding: 10px;
       background-color: #2C3E50;
       border-radius: 10px;
       margin-top: 20px;
+      overflow-y: auto;
+      height: 200px;
+      scrollbar-width: thin;
+      scrollbar-color: #1abc9c transparent;
     }
+
+    .user-list::-webkit-scrollbar,
+    .room-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .user-list::-webkit-scrollbar-thumb,
+    .room-list::-webkit-scrollbar-thumb {
+      background-color: #1abc9c;
+      border-radius: 10px;
+    }
+
     .user-list a, .room-list a {
       color: #00c6ff;
       text-decoration: none;
@@ -62,34 +92,39 @@
       border-radius: 5px;
       transition: background-color 0.3s ease-in-out;
     }
+
     .user-list a:hover, .room-list a:hover {
       background-color: #00c6ff;
       color: #fff;
     }
+
     .chat-box {
-      height: 100vh;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
       padding: 20px;
       background-color: #fff;
       border-left: 1px solid #DEE2E6;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      height: 100%;
     }
+
     .chat-box h4 {
       margin-bottom: 20px;
       color: #343A40;
       text-align: center;
       font-weight: bold;
     }
+
     #messages {
       flex-grow: 1;
       overflow-y: auto;
-      max-height: calc(100vh - 200px);
+      max-height: 100%;
       padding: 20px;
       background-color: #F8F9FA;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     .message {
       padding: 10px;
       border-radius: 10px;
@@ -97,24 +132,29 @@
       transition: transform 0.2s ease-in-out;
       max-width: 70%;
     }
+
     .message.sent {
       background-color: #007BFF;
       color: #fff;
       align-self: flex-end;
     }
+
     .message.received {
       background-color: #E9ECEF;
       color: #343A40;
       align-self: flex-start;
     }
+
     .message:hover {
       transform: scale(1.05);
     }
+
     .message-time {
       font-size: 0.8em;
       color: #6C757D;
       text-align: right;
     }
+
     .new-message-form {
       display: flex;
       align-items: center;
@@ -122,103 +162,108 @@
       border-top: 1px solid #DEE2E6;
       background-color: #F8F9FA;
     }
+
     .new-message-form input {
       flex: 1;
       margin-right: 10px;
       border-radius: 20px;
       padding: 10px;
       border: 1px solid #CED4DA;
-      transition: border-color 0.3s ease-in-out;
     }
+
     .new-message-form input:focus {
       border-color: #80BDFF;
       outline: 0;
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
+
     .new-message-form button {
       padding: 10px 20px;
       border-radius: 20px;
       background-color: #007BFF;
       color: #fff;
       border: none;
-      transition: background-color 0.3s ease-in-out;
     }
+
     .new-message-form button:hover {
       background-color: #0056B3;
     }
-    </style>
-    <!-- WhatsApp Chat Button -->
-    <div id="whatsapp-chat">
-      <a href="https://api.whatsapp.com/send/?phone=%2B918629996133&text&type=phone_number&app_absent=0"
-        target="_blank" class="whatsapp-link">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
-            alt="WhatsApp Chat" width="40" height="40">
-        <span class="chat-label">Contact Admin</span>
-      </a>
-    </div>
-    <style>
-      #whatsapp-chat {
-        position: fixed;
-        bottom: 20px;
-        right: 200px;
-        z-index: 1000;
-      }
 
-      .whatsapp-link {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        background: #25D366;
-        padding: 8px 12px;
-        border-radius: 30px;
-        color: white;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        transition: background-color 0.3s ease;
-      }
+    #whatsapp-chat {
+      position: fixed;
+      bottom: 20px;
+      right: 200px;
+      z-index: 1000;
+    }
 
-      .whatsapp-link:hover {
-        background-color: #128C7E;
-      }
+    .whatsapp-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      background: #25D366;
+      padding: 8px 12px;
+      border-radius: 30px;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
 
-      .whatsapp-link img {
-        margin-right: 10px;
-      }
+    .whatsapp-link:hover {
+      background-color: #128C7E;
+    }
 
-      .chat-label {
-        font-weight: bold;
-        font-size: 14px;
-      }
-    </style>
+    .whatsapp-link img {
+      margin-right: 10px;
+    }
+
+    .chat-label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2 sidebar">
-        <div class="sidebar-header">
-          <h5>Hi <%= @current_user.username %></h5>
-          <%= link_to 'Sign Out', signout_path, method: :delete, class: 'btn btn-danger btn-sm' %>
-        </div>
-        <div class="sidebar-content">
-          <h4>Users</h4>
-          <div class="user-list">
-            <%= turbo_stream_from "users" %>
-            <div id="users">
-              <%= render @users %>
-            </div>
+  <!-- Top Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand font-weight-bold" href="#">ChatApp</a>
+      <div class="ml-auto d-flex align-items-center">
+        <span class="navbar-text text-white mr-3">
+          Hi <%= @current_user.username %>
+        </span>
+        <%= link_to 'Sign Out', signout_path, method: :delete, class: 'btn btn-outline-light btn-sm' %>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-content">
+        <h4>Users</h4>
+        <div class="user-list">
+          <%= turbo_stream_from "users" %>
+          <div id="users">
+            <%= render @users %>
           </div>
-          <h4>Rooms</h4>
-          <%= render partial: "rooms/new_room_requset" %>
-          <div class="room-list">
-            <%= turbo_stream_from "rooms" %>
-            <div id="rooms">
-              <%= render @rooms %>
-            </div>
+        </div>
+
+        <h4>Rooms</h4>
+        <%= render partial: "rooms/new_room_requset" %>
+        <div class="room-list">
+          <%= turbo_stream_from "rooms" %>
+          <div id="rooms">
+            <%= render @rooms %>
           </div>
         </div>
       </div>
-      <div class="col-md-10 chat-box" id="test">
+    </div>
+
+    <!-- Main Chat Content -->
+    <div class="content">
+      <div class="chat-box">
         <% if @single_room %>
-          <h4 class="text-center"><%= @user&.username || @single_room.name %></h4>
+          <h4><%= @user&.username || @single_room.name %></h4>
           <%= turbo_stream_from @single_room %>
           <div id="messages" class="d-flex flex-column">
             <%= render @messages %>
@@ -227,29 +272,39 @@
         <% end %>
       </div>
     </div>
-    <script>
-      document.addEventListener('turbo:load', function() {
-        var messagesContainer = document.getElementById('messages');
+  </div>
+
+  <!-- WhatsApp Button -->
+  <div id="whatsapp-chat">
+    <a href="https://api.whatsapp.com/send/?phone=%2B918629996133&text&type=phone_number&app_absent=0"
+       target="_blank" class="whatsapp-link">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+           alt="WhatsApp Chat" width="40" height="40">
+      <span class="chat-label">Contact Admin</span>
+    </a>
+  </div>
+
+  <!-- Auto scroll chat to bottom -->
+  <script>
+    document.addEventListener('turbo:load', function () {
+      var messagesContainer = document.getElementById('messages');
+      if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+    });
+
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function () {
+        const messagesContainer = document.getElementById('messages');
         if (messagesContainer) {
           messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
       });
+    });
 
-      var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          var messagesContainer = document.getElementById('messages');
-          if (messagesContainer) {
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-          }
-        });
-      });
-
-      var config = { childList: true };
-      var targetNode = document.getElementById('messages');
-      if (targetNode) {
-        observer.observe(targetNode, config);
-      }
-    </script>
-  </div>
+    const config = { childList: true };
+    const targetNode = document.getElementById('messages');
+    if (targetNode) observer.observe(targetNode, config);
+  </script>
 </body>
 </html>
