@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       UserNotificationMailer.welcome_email(user).deliver_now if is_new_user
 
-      redirect_to root_path, notice: "Signed in as #{user.name}"
+      redirect_to root_path
     else
       redirect_to root_path, alert: 'Failed to sign in'
     end
