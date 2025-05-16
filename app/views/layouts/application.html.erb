@@ -28,6 +28,11 @@
     </div>
   <% end %>
 
+  <% if current_user %>
+    <%= turbo_stream_from "user_notifications_#{current_user.id}" %>
+    <div id="user_notifications"></div>
+  <% end %>
+
   <%= yield %>
 </body>
 </html>

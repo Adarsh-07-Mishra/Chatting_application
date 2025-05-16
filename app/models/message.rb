@@ -7,6 +7,7 @@ class Message < ApplicationRecord
   belongs_to :room
 
   after_create_commit { broadcast_append_to room }
+  after_create_commit :notify_users
 
   before_create :confirm_participant
   after_create :schedule_deletion
@@ -26,5 +27,16 @@ class Message < ApplicationRecord
 
   def schedule_deletion
     DeleteMessageJob.set(wait: 7.hours).perform_later(id)
+  end
+
+  def notify_users
+    room.participants.where.not(user_id: user_id).each do |participant|
+      Turbo::StreamsChannel.broadcast_append_to(
+        "user_notifications_#{participant.user_id}",
+        target: "user_notifications",
+        partial: "messages/notification",
+        locals: { message: self }
+      )
+    end
   end
 end
