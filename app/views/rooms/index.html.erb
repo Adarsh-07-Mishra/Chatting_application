@@ -68,7 +68,7 @@
       border-radius: 10px;
       margin-top: 20px;
       overflow-y: auto;
-      height: 250px;
+      height: 230px;
       scrollbar-width: thin;
       scrollbar-color: #1abc9c transparent;
     }
@@ -240,6 +240,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="sidebar-content">
+      <input type="text" id="user-search" class="form-control mb-3" placeholder="Search users...">
         <h4>Users</h4>
         <div class="user-list">
           <%= turbo_stream_from "users" %>
@@ -306,5 +307,21 @@
     const targetNode = document.getElementById('messages');
     if (targetNode) observer.observe(targetNode, config);
   </script>
+
+  <script>
+    document.addEventListener('turbo:load', function () {
+      const searchInput = document.getElementById('user-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          const query = this.value.toLowerCase();
+          const users = document.querySelectorAll('.user-list a');
+          users.forEach(user => {
+            const text = user.textContent.toLowerCase();
+            user.style.display = text.includes(query) ? 'block' : 'none';
+          });
+        });
+      }
+    });
+</script>
 </body>
 </html>
