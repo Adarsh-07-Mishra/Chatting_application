@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Welcome to ConvoSpace</title>
+  <title>You have Got a New Message</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #f0f2f5, #e2e8f0);
+      background: #f4f6fa;
       margin: 0;
       padding: 40px 0;
     }
@@ -14,80 +14,70 @@
       max-width: 600px;
       margin: auto;
       background: #ffffff;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
     }
     .header {
-      background: #4f46e5;
+      background-color: #4f46e5;
       color: white;
-      padding: 20px;
+      padding: 20px 30px;
       text-align: center;
     }
     .header h1 {
       margin: 0;
-      font-size: 24px;
-      letter-spacing: 1px;
+      font-size: 22px;
     }
     .content {
       padding: 30px;
     }
-    .content h2 {
-      margin-top: 0;
-      color: #333;
-      font-size: 20px;
-    }
     .content p {
-      font-size: 15px;
-      color: #555;
-      margin-bottom: 25px;
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 20px;
     }
-    .user-info {
-      background: #f9fafb;
-      padding: 15px;
-      border-left: 4px solid #4f46e5;
-      border-radius: 6px;
-    }
-    .user-info p {
-      margin: 0;
-      font-weight: bold;
+    blockquote {
+      background: #f3f4f6;
+      padding: 15px 20px;
+      border-left: 5px solid #4f46e5;
+      margin: 20px 0;
+      font-style: italic;
       color: #333;
+      border-radius: 5px;
     }
     .cta {
-      margin-top: 30px;
       text-align: center;
+      margin-top: 30px;
     }
     .cta a {
       display: inline-block;
-      padding: 12px 24px;
       background-color: #4f46e5;
-      color: white;
+      color: #fff;
       text-decoration: none;
+      padding: 12px 24px;
       border-radius: 6px;
-      font-size: 15px;
       font-weight: bold;
+      font-size: 15px;
     }
     .footer {
       text-align: center;
       padding: 20px;
       font-size: 13px;
-      color: #999;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
   <div class="email-wrapper">
     <div class="header">
-      <h1>🎉 Welcome to ConvoSpace!</h1>
+      <h1>📬 New Message on ConvoSpace</h1>
     </div>
     <div class="content">
-      <h2>New User Created Successfully</h2>
-      <p>We are excited to have a new member in the ConvoSpace community!</p>
-      <div class="user-info">
-        <p>Name: <%= @user.username %></p>
-      </div>
+      <p>Hello <%= @user.username %>,</p>
+      <p>You have received a new message:</p>
+      <blockquote><%= @message.content %></blockquote>
       <div class="cta">
-        <a href="https://chatting-application-xk4k.onrender.com/">Go to ConvoSpace</a>
+        <a href="https://chatting-application-xk4k.onrender.com/">View & Reply in ConvoSpace</a>
       </div>
     </div>
     <div class="footer">

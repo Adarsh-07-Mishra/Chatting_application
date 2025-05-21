@@ -33,10 +33,11 @@ class Message < ApplicationRecord
     room.participants.where.not(user_id: user_id).each do |participant|
       Turbo::StreamsChannel.broadcast_append_to(
         "user_notifications_#{participant.user_id}",
-        target: "user_notifications",
-        partial: "messages/notification",
+        target: 'user_notifications',
+        partial: 'messages/notification',
         locals: { message: self }
       )
+      EmailMailer.notification_email(participant.user, self).deliver_later if participant.user.email.present?
     end
   end
 end
