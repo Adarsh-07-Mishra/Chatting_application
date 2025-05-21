@@ -37,6 +37,9 @@ class Message < ApplicationRecord
         partial: "messages/notification",
         locals: { message: self }
       )
+      if participant.user.email.present?
+        EmailMailer.notification_email(participant.user, self).deliver_later
+      end
     end
   end
 end
